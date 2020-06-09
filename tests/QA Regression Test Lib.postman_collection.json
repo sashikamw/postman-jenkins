@@ -1,0 +1,2566 @@
+{
+	"info": {
+		"_postman_id": "23656fca-61a7-4451-af77-e965ddcf58f4",
+		"name": "QA Regression Test Lib",
+		"description": "This is the QA API test library targerting the API automation for the regression testing. Folder structure and test case id's can be related with QA test library",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Content Pages",
+			"item": [
+				{
+					"name": "Forms - Call Request",
+					"item": [
+						{
+							"name": "[CO_301] Request Call - blank fields",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "de305622-ff75-4e3b-bf54-0db00bac1741",
+										"exec": [
+											"//User can not submit the form with blank fields. Hece verify the calient error",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"// Verify the error message indicate the field with the issue and reason",
+											"",
+											"pm.test(\"Verify error message\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.details).to.have.string(\"Value cannot be null or empty\");",
+											"});",
+											"",
+											"pm.test(\"Verify error field\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.details).to.have.string(\"fullName\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"phone\": \"3333334444\",\n  \"fullName\": \"\",\n  \"message\": \"test message\",\n  \"subject\": \"RequestCall\",\n  \"captcha\": \"03AOLTBLQT1e8xnEnvHxtbWT_YeBCd4nStaXYS-MaLFS3-DfNydRIFR4L4-DauHTHLoM751FGELm9mvy4xI45IlJFnZhe8KPlyL1w0I-jHh0E5NPB951i-sIGjJnKf__zRDcfAvKgcjQeKe2YqUzBHljPnKO7PLmxwhouZ313KROh_cqNKAaxJasN0Z7VX6ggWv1456c7UFUC5jlZ-Uwh3T7evyRuanOmat0un0xCrr2yNvNpAhbdmDHUogiKwOuqwmo18Nl94im91IsPNzS0ALRGRME028tqCbu-aOPBhm2pGT5V40U4zPUS3ev-cKtrgg_Pj4Sqrpb-qSRKhgE7QENy90srd2cPITThEZuqzEHJbbTaVPCVzOXalpGqQkp0sXuOf9rWP-tn91axug3KqexxIWiyEev4seEXTJSte5KBDliOkNj4pFEQtyXCk-a0vTwvdskAG_cWTgAZ2QPJtSolEvhzNbk4OWXD2QqVr1Mf6q6s3kHQ07NM\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/consumer/companies/communications",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"consumer",
+										"companies",
+										"communications"
+									]
+								},
+								"description": "User attempts to request a call with blank fields"
+							},
+							"response": []
+						},
+						{
+							"name": "[CO_303] Request Call - required fields only",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "de305622-ff75-4e3b-bf54-0db00bac1741",
+										"exec": [
+											"//User should be able to submit without the message. Hence 200 response",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"phone\": \"1112223333\",\n  \"fullName\": \"fname lname\",\n  \"message\": \"\",\n  \"subject\": \"RequestCall\",\n  \"captcha\": \"03AOLTBLQT1e8xnEnvHxtbWT_YeBCd4nStaXYS-MaLFS3-DfNydRIFR4L4-DauHTHLoM751FGELm9mvy4xI45IlJFnZhe8KPlyL1w0I-jHh0E5NPB951i-sIGjJnKf__zRDcfAvKgcjQeKe2YqUzBHljPnKO7PLmxwhouZ313KROh_cqNKAaxJasN0Z7VX6ggWv1456c7UFUC5jlZ-Uwh3T7evyRuanOmat0un0xCrr2yNvNpAhbdmDHUogiKwOuqwmo18Nl94im91IsPNzS0ALRGRME028tqCbu-aOPBhm2pGT5V40U4zPUS3ev-cKtrgg_Pj4Sqrpb-qSRKhgE7QENy90srd2cPITThEZuqzEHJbbTaVPCVzOXalpGqQkp0sXuOf9rWP-tn91axug3KqexxIWiyEev4seEXTJSte5KBDliOkNj4pFEQtyXCk-a0vTwvdskAG_cWTgAZ2QPJtSolEvhzNbk4OWXD2QqVr1Mf6q6s3kHQ07NM\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/consumer/companies/communications",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"consumer",
+										"companies",
+										"communications"
+									]
+								},
+								"description": "User successfully requests a call with only mandatory fields"
+							},
+							"response": []
+						},
+						{
+							"name": "[CO_304] Request Call - All fields filled",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "813c5e8b-f83b-402b-a4e5-ceafb7533e1c",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"phone\": \"3333334444\",\n  \"fullName\": \"fname lname\",\n  \"message\": \"test message\",\n  \"subject\": \"RequestCall\",\n  \"captcha\": \"03AOLTBLQT1e8xnEnvHxtbWT_YeBCd4nStaXYS-MaLFS3-DfNydRIFR4L4-DauHTHLoM751FGELm9mvy4xI45IlJFnZhe8KPlyL1w0I-jHh0E5NPB951i-sIGjJnKf__zRDcfAvKgcjQeKe2YqUzBHljPnKO7PLmxwhouZ313KROh_cqNKAaxJasN0Z7VX6ggWv1456c7UFUC5jlZ-Uwh3T7evyRuanOmat0un0xCrr2yNvNpAhbdmDHUogiKwOuqwmo18Nl94im91IsPNzS0ALRGRME028tqCbu-aOPBhm2pGT5V40U4zPUS3ev-cKtrgg_Pj4Sqrpb-qSRKhgE7QENy90srd2cPITThEZuqzEHJbbTaVPCVzOXalpGqQkp0sXuOf9rWP-tn91axug3KqexxIWiyEev4seEXTJSte5KBDliOkNj4pFEQtyXCk-a0vTwvdskAG_cWTgAZ2QPJtSolEvhzNbk4OWXD2QqVr1Mf6q6s3kHQ07NM\"\n}"
+								},
+								"url": {
+									"raw": "https://{{domain}}/{{env}}/consumer/companies/communications",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"{{env}}",
+										"consumer",
+										"companies",
+										"communications"
+									]
+								},
+								"description": "User successfully requests a call with all possible fields "
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Forms - Contact Us",
+					"item": [
+						{
+							"name": "[CO_351] Contact us - Missing required fields",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "de305622-ff75-4e3b-bf54-0db00bac1741",
+										"exec": [
+											"//User can not submit the form with blank fields. Hece verify the calient error",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"// Verify the error message indicate the field with the issue and reason",
+											"",
+											"pm.test(\"Verify error message\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.details).to.have.string(\"Value cannot be null or empty\");",
+											"});",
+											"",
+											"pm.test(\"Verify error field\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.details).to.have.string(\"fullName\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"phone\": \"3333334444\",\n  \"email\": \"qahomex@gmail.com\",\n  \"fullName\": \"\",\n  \"message\": \"test message\",\n  \"subject\": \"CareerOpportunities\",\n  \"captcha\": \"03AOLTBLQT1e8xnEnvHxtbWT_YeBCd4nStaXYS-MaLFS3-DfNydRIFR4L4-DauHTHLoM751FGELm9mvy4xI45IlJFnZhe8KPlyL1w0I-jHh0E5NPB951i-sIGjJnKf__zRDcfAvKgcjQeKe2YqUzBHljPnKO7PLmxwhouZ313KROh_cqNKAaxJasN0Z7VX6ggWv1456c7UFUC5jlZ-Uwh3T7evyRuanOmat0un0xCrr2yNvNpAhbdmDHUogiKwOuqwmo18Nl94im91IsPNzS0ALRGRME028tqCbu-aOPBhm2pGT5V40U4zPUS3ev-cKtrgg_Pj4Sqrpb-qSRKhgE7QENy90srd2cPITThEZuqzEHJbbTaVPCVzOXalpGqQkp0sXuOf9rWP-tn91axug3KqexxIWiyEev4seEXTJSte5KBDliOkNj4pFEQtyXCk-a0vTwvdskAG_cWTgAZ2QPJtSolEvhzNbk4OWXD2QqVr1Mf6q6s3kHQ07NM\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/consumer/companies/communications",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"consumer",
+										"companies",
+										"communications"
+									]
+								},
+								"description": "User attempts to submit the contact form without filling required fields"
+							},
+							"response": []
+						},
+						{
+							"name": "[CO_353] Contact us - successful",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "49345420-c93f-4f61-8512-e74d2e6446ca",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "{{auth}}"
+									},
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"phone\": \"1112223333\",\n  \"fullName\": \"fname lname\",\n  \"message\": \"test message\",\n  \"subject\": \"MyAccount\",\n  \"captcha\": \"03AOLTBLQT1e8xnEnvHxtbWT_YeBCd4nStaXYS-MaLFS3-DfNydRIFR4L4-DauHTHLoM751FGELm9mvy4xI45IlJFnZhe8KPlyL1w0I-jHh0E5NPB951i-sIGjJnKf__zRDcfAvKgcjQeKe2YqUzBHljPnKO7PLmxwhouZ313KROh_cqNKAaxJasN0Z7VX6ggWv1456c7UFUC5jlZ-Uwh3T7evyRuanOmat0un0xCrr2yNvNpAhbdmDHUogiKwOuqwmo18Nl94im91IsPNzS0ALRGRME028tqCbu-aOPBhm2pGT5V40U4zPUS3ev-cKtrgg_Pj4Sqrpb-qSRKhgE7QENy90srd2cPITThEZuqzEHJbbTaVPCVzOXalpGqQkp0sXuOf9rWP-tn91axug3KqexxIWiyEev4seEXTJSte5KBDliOkNj4pFEQtyXCk-a0vTwvdskAG_cWTgAZ2QPJtSolEvhzNbk4OWXD2QqVr1Mf6q6s3kHQ07NM\"\n}"
+								},
+								"url": {
+									"raw": "https://{{domain}}/consumer/companies/communications",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"consumer",
+										"companies",
+										"communications"
+									]
+								},
+								"description": "User propvides all the required fields and submit the contact us form successfully"
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cd6cb735-aaf2-4e75-9084-ee28818d33c7",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "2935df74-33e3-4252-81c3-9c118f9c6f82",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "General",
+					"item": [
+						{
+							"name": "[CO_103][CO_104] Career Page - Get locations and Departments",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "14f50d07-22b8-4831-b45b-9eefbd3a715c",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Verify the company locations\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.locations[0]).to.be.not.empty;",
+											"});",
+											"",
+											"pm.test(\"Verify the departments\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.departments[0].name).to.be.not.empty;",
+											"    pm.expect(jsonData.departments[0].teams[0]).to.be.not.empty;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://{{domain}}/career/company-structure?companyId={{homexCompanyId}}",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"career",
+										"company-structure"
+									],
+									"query": [
+										{
+											"key": "companyId",
+											"value": "{{homexCompanyId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "[CO_103][[CO_104] Career Page - Get job opportunities",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "14f50d07-22b8-4831-b45b-9eefbd3a715c",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Verify the response\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[0].id).to.be.not.empty;",
+											"    pm.expect(jsonData[0].location).to.be.not.empty;",
+											"    pm.expect(jsonData[0].department).to.be.not.empty;",
+											"    pm.expect(jsonData[0].team).to.be.not.empty;",
+											"    pm.expect(jsonData[0].position).to.be.not.empty;",
+											"    pm.expect(jsonData[0].descriptionUrl).to.be.not.empty;",
+											"    pm.expect(jsonData[0].applyUrl).to.be.not.empty;",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://{{domain}}/career?companyId={{homexCompanyId}}",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"career"
+									],
+									"query": [
+										{
+											"key": "companyId",
+											"value": "{{homexCompanyId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Service Area",
+					"item": [
+						{
+							"name": "Get service area based on the zipcode",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "91c994e4-b25a-4722-aa5d-bdd6c0c340c5",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Verify the response\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[0].areas[0].phoneNumber).to.be.not.empty;",
+											"    pm.expect(jsonData[0].areas[0].postCode).to.be.eq(environment.postalCode);",
+											"});",
+											"",
+											"//Set the consumer token as environement variable",
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"city\", jsonData[0].areas[0].city);",
+											"pm.globals.set(\"city\", jsonData[0].areas[0].city);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://{{domain}}/consumer/companies?postCode={{postalCode}}",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"consumer",
+										"companies"
+									],
+									"query": [
+										{
+											"key": "postCode",
+											"value": "{{postalCode}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Provided trade types",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "91c994e4-b25a-4722-aa5d-bdd6c0c340c5",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Verify the response\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.is24Seven).to.be.not.null;",
+											"    pm.expect(jsonData.tradeTypes[0]).to.be.not.null;",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://{{domain}}/consumer/companies/{{homexCompanyId}}/trade-types?postCode={{postalCode}}&city={{city}}",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"consumer",
+										"companies",
+										"{{homexCompanyId}}",
+										"trade-types"
+									],
+									"query": [
+										{
+											"key": "postCode",
+											"value": "{{postalCode}}"
+										},
+										{
+											"key": "city",
+											"value": "{{city}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Login/Signup",
+			"item": [
+				{
+					"name": "Sign In",
+					"item": [
+						{
+							"name": "[LO_101] Consumer - Login Success",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2839a1b6-7e9e-4dde-9465-79c8d3f0d7cb",
+										"exec": [
+											"//Verify the request success",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Verify the token is not empty",
+											"",
+											"pm.test(\"Verify token string\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.token).to.be.not.empty;",
+											"});",
+											"",
+											"//Set the consumer token as environement variable",
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"consumerToken\", jsonData.token);",
+											"pm.globals.set(\"consumerToken\", jsonData.token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"loginPassword\":\n\t{\n\t\t\"identifier\":\"{{consumerEmail}}\",\n\t\t\"secret\":\"{{consumerPassword}}\",\n\t\t\"rememberMe\":false\n\t}\n}\n",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/access-token",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"access-token"
+									]
+								},
+								"description": "Can successfully login with an existing account"
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_102][1] Login - Fail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cb600bbc-d40e-43ce-b1f9-5d45e208894a",
+										"exec": [
+											"",
+											"pm.test(\"Status code is 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});",
+											"",
+											"// Verify the error message indicate the failure reason",
+											"",
+											"pm.test(\"Verify error message\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.details).to.have.string(\"User credentials invalid\");",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"loginPassword\":\n\t{\n\t\t\"identifier\":\"{{consumerEmail}}\",\n\t\t\"secret\":\"test@123\",\n\t\t\"rememberMe\":false\n\t}\n}\n",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/access-token",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"access-token"
+									]
+								},
+								"description": "Error successfully thrown when using incorrect login information - Wrong Password"
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_102][2] Login - Fail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cb600bbc-d40e-43ce-b1f9-5d45e208894a",
+										"exec": [
+											"",
+											"pm.test(\"Status code is 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});",
+											"",
+											"// Verify the error message indicate the failure reason",
+											"",
+											"pm.test(\"Verify error message\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.details).to.have.string(\"User credentials invalid\");",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"loginPassword\":\n\t{\n\t\t\"identifier\":\"qahomex@gmai.com\",\n\t\t\"secret\":\"{{consumerPassword}}\",\n\t\t\"rememberMe\":false\n\t}\n}\n",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/access-token",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"access-token"
+									]
+								},
+								"description": "Error successfully thrown when using incorrect login information - Wrong Email"
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_101] Agent - Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2839a1b6-7e9e-4dde-9465-79c8d3f0d7cb",
+										"exec": [
+											"//Verify the request success",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Verify the token is not empty",
+											"",
+											"pm.test(\"Verify token string\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.token).to.be.not.empty;",
+											"});",
+											"",
+											"//Set the agent token as environement variable",
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"agentToken\", jsonData.token);",
+											"pm.globals.set(\"agentToken\", jsonData.token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"loginPassword\":\n\t{\n\t\t\"identifier\":\"{{agentEmail}}\",\n\t\t\"secret\":\"{{agentPassword}}\",\n\t\t\"rememberMe\":false\n\t}\n}\n",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/access-token",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"access-token"
+									]
+								},
+								"description": "Can successfully login with an existing account"
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_101] Supervisor - Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2839a1b6-7e9e-4dde-9465-79c8d3f0d7cb",
+										"exec": [
+											"//Verify the request success",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Verify the token is not empty",
+											"",
+											"pm.test(\"Verify token string\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.token).to.be.not.empty;",
+											"});",
+											"",
+											"//Set the supervisor token as environement variable",
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"supervisorToken\", jsonData.token);",
+											"pm.globals.set(\"supervisorToken\", jsonData.token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"loginPassword\":\n\t{\n\t\t\"identifier\":\"{{supervisorEmail}}\",\n\t\t\"secret\":\"{{supervisorPassword}}\",\n\t\t\"rememberMe\":false\n\t}\n}\n",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/access-token",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"access-token"
+									]
+								},
+								"description": "Can successfully login with an existing account"
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_106][LO_112][LO_111] Reset Password - Can't login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2839a1b6-7e9e-4dde-9465-79c8d3f0d7cb",
+										"exec": [
+											"//Verify the request success",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"identifier\":\"{{uniqueEmail}}\",\n   \"type\":\"ResetPassword\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/token",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"token"
+									]
+								},
+								"description": "Can successfully login with an existing account"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Sign Up",
+					"item": [
+						{
+							"name": "[LO_200] Create account - missing required fields",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f44b9c-7910-4dd5-a3ae-e13e74579eb0",
+										"exec": [
+											"",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"// Verify the error message indicate the failure reason",
+											"",
+											"pm.test(\"Verify error message\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.details).to.have.string(\"Email is required for create user\");",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"\",\n  \"firstName\": \"homex\",\n  \"lastName\": \"\",\n  \"phone\": \"\",\n  \"phoneType\": \"\",\n  \"contactPreference\": \"email\",\n  \"captcha\": \"03AOLTBLQT1e8xnEnvHxtbWT_YeBCd4nStaXYS-MaLFS3-DfNydRIFR4L4-DauHTHLoM751FGELm9mvy4xI45IlJFnZhe8KPlyL1w0I-jHh0E5NPB951i-sIGjJnKf__zRDcfAvKgcjQeKe2YqUzBHljPnKO7PLmxwhouZ313KROh_cqNKAaxJasN0Z7VX6ggWv1456c7UFUC5jlZ-Uwh3T7evyRuanOmat0un0xCrr2yNvNpAhbdmDHUogiKwOuqwmo18Nl94im91IsPNzS0ALRGRME028tqCbu-aOPBhm2pGT5V40U4zPUS3ev-cKtrgg_Pj4Sqrpb-qSRKhgE7QENy90srd2cPITThEZuqzEHJbbTaVPCVzOXalpGqQkp0sXuOf9rWP-tn91axug3KqexxIWiyEev4seEXTJSte5KBDliOkNj4pFEQtyXCk-a0vTwvdskAG_cWTgAZ2QPJtSolEvhzNbk4OWXD2QqVr1Mf6q6s3kHQ07NM\",\n  \"secret\": \"test@1234\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user"
+									]
+								},
+								"description": "User attempts to create an account without completing all mandatory fields"
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_204] Create an account - Success",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f44b9c-7910-4dd5-a3ae-e13e74579eb0",
+										"exec": [
+											"",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"// Verify the response return the user Id",
+											"",
+											"pm.test(\"Verify respose message\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.userId).to.be.not.empty;",
+											"});",
+											"",
+											"//Set the new user ID as env varibale",
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"newUserId\", jsonData.userId);",
+											"pm.globals.set(\"newUserId\", jsonData.userId);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "62daffc5-4815-49c0-9e3c-8c94b22d769e",
+										"exec": [
+											"// Creating a unique email address",
+											"function uniqueemail() {",
+											"  var timestamp = Date.now();",
+											"  const a = \"qa+\";",
+											"  const b = \"@homex.com\"",
+											"  var uniqueemail = a+timestamp+b;",
+											"  return uniqueemail;",
+											"}",
+											"",
+											"//Set the email address as an env varibale",
+											"postman.setEnvironmentVariable(\"uniqueEmail\", uniqueemail());",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{uniqueEmail}}\",\n  \"firstName\": \"homex\",\n  \"lastName\": \"\",\n  \"phone\": \"\",\n  \"phoneType\": \"\",\n  \"contactPreference\": \"email\",\n  \"captcha\": \"03AHaCkAZNAXHlBMbufpmmWl3yPlB5xLSp9BCwwWREMJO0SSqiREFSTNhLZ_Eizab2qrA6eXG01dXH-qQ_-xHAez-XQY5eNBrQGYe8aR065iWN3qwmnSaDpJAoyZtEAcH8yOTILQEXQfYMhOoNgo6jeQBxWwSd8uqGb-9-WNEcKmzqsainYsNiqxt9zsPyS5CH23eX38jdD23Qe-JbYiUe4kNVF6t-Ry4WKwp1dsXunjLtohr-Xw8h_wchFnebhslpaU1URP49gx-5iATE73ZPILP8aL0CJt7DjBLHVczgGWZ7udixUB7XJ3VPXFTCN-RTGcIV312njNuleoPgYwSC42dDB7u5Ro5EcRIzs2P6Mw3u6C8lEljGdAYBlgjxmkxHsrx2x2FA2FU7RCdT1m5YmjigdwGSOfrjFQ\",\n  \"secret\": \"{{consumerPassword}}\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user"
+									]
+								},
+								"description": "User clicks link, Don't have an account? Create an account, where user submits their information to create an account."
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_205] Create account - Login unverified user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2839a1b6-7e9e-4dde-9465-79c8d3f0d7cb",
+										"exec": [
+											"//Verify the request success",
+											"pm.test(\"Status code is 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});",
+											"",
+											"// Verify the token is not empty",
+											"",
+											"pm.test(\"Verify response error\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.details).to.have.string(\"User account not verified\")",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"loginPassword\":\n\t{\n\t\t\"identifier\":\"{{uniqueEmail}}\",\n\t\t\"secret\":\"{{consumerPassword}}\",\n\t\t\"rememberMe\":false\n\t}\n}\n",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/access-token",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"access-token"
+									]
+								},
+								"description": "Can successfully login with an existing account"
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_209] Create account - Resend email verification",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f44b9c-7910-4dd5-a3ae-e13e74579eb0",
+										"exec": [
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "62daffc5-4815-49c0-9e3c-8c94b22d769e",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\t\n\t\"type\":\"AccountConfirmation\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/{{newUserId}}/token",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"{{newUserId}}",
+										"token"
+									]
+								},
+								"description": "User clicks link, Don't have an account? Create an account, where user submits their information to create an account."
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_210] Register with existing email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f44b9c-7910-4dd5-a3ae-e13e74579eb0",
+										"exec": [
+											"",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Verify respose error\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.details).to.have.string(\"Could not create user with email\");",
+											"});",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "62daffc5-4815-49c0-9e3c-8c94b22d769e",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{consumerEmail}}\",\n  \"firstName\": \"homex\",\n  \"lastName\": \"\",\n  \"phone\": \"\",\n  \"phoneType\": \"\",\n  \"contactPreference\": \"email\",\n  \"captcha\": \"03AOLTBLQT1e8xnEnvHxtbWT_YeBCd4nStaXYS-MaLFS3-DfNydRIFR4L4-DauHTHLoM751FGELm9mvy4xI45IlJFnZhe8KPlyL1w0I-jHh0E5NPB951i-sIGjJnKf__zRDcfAvKgcjQeKe2YqUzBHljPnKO7PLmxwhouZ313KROh_cqNKAaxJasN0Z7VX6ggWv1456c7UFUC5jlZ-Uwh3T7evyRuanOmat0un0xCrr2yNvNpAhbdmDHUogiKwOuqwmo18Nl94im91IsPNzS0ALRGRME028tqCbu-aOPBhm2pGT5V40U4zPUS3ev-cKtrgg_Pj4Sqrpb-qSRKhgE7QENy90srd2cPITThEZuqzEHJbbTaVPCVzOXalpGqQkp0sXuOf9rWP-tn91axug3KqexxIWiyEev4seEXTJSte5KBDliOkNj4pFEQtyXCk-a0vTwvdskAG_cWTgAZ2QPJtSolEvhzNbk4OWXD2QqVr1Mf6q6s3kHQ07NM\",\n  \"secret\": \"test@1234\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user"
+									]
+								},
+								"description": "User clicks link, Don't have an account? Create an account, where user submits their information to create an account."
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_215] Get user details - Registered User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "dab6ac8a-e1c6-4329-a044-db1ed6d8534b",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"//Set the new user ID as env varibale",
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"registeredUserEmail\", jsonData.email);",
+											"pm.globals.set(\"registeredUserEmail\", jsonData.email);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "1af7cfe8-a4fd-45d6-bd1b-cd60c89b88b2",
+										"exec": [
+											"// Creating a unique email address",
+											"function uniqueemail() {",
+											"  var timestamp = Date.now();",
+											"  const a = \"qa+\";",
+											"  const b = \"@homex.com\"",
+											"  var uniqueemail = a+timestamp+b;",
+											"  return uniqueemail;",
+											"}",
+											"",
+											"//Set the email address as an env varibale",
+											"postman.setEnvironmentVariable(\"uniqueEmail\", uniqueemail());",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{agentToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://{{domain}}/business/user/{{newUserId}}",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"business",
+										"user",
+										"{{newUserId}}"
+									]
+								},
+								"description": "Agent can create a user when an unregistered user connects via chat"
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_215] Create account - Registered user - Verification not expired",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f44b9c-7910-4dd5-a3ae-e13e74579eb0",
+										"exec": [
+											"",
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"// Verify the response return the user Id",
+											"",
+											"pm.test(\"Verify respose message\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.details).to.include(\"Could not create user with email\")",
+											"});",
+											"",
+											"//Set the new user ID as env varibale",
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"newUserId\", jsonData.userId);",
+											"pm.globals.set(\"newUserId\", jsonData.userId);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "62daffc5-4815-49c0-9e3c-8c94b22d769e",
+										"exec": [
+											"// Creating a unique email address",
+											"function uniqueemail() {",
+											"  var timestamp = Date.now();",
+											"  const a = \"qa+\";",
+											"  const b = \"@homex.com\"",
+											"  var uniqueemail = a+timestamp+b;",
+											"  return uniqueemail;",
+											"}",
+											"",
+											"//Set the email address as an env varibale",
+											"postman.setEnvironmentVariable(\"uniqueEmail\", uniqueemail());",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{registeredUserEmail}}\",\n  \"firstName\": \"homex\",\n  \"lastName\": \"\",\n  \"phone\": \"\",\n  \"phoneType\": \"\",\n  \"contactPreference\": \"email\",\n  \"captcha\": \"03AOLTBLQT1e8xnEnvHxtbWT_YeBCd4nStaXYS-MaLFS3-DfNydRIFR4L4-DauHTHLoM751FGELm9mvy4xI45IlJFnZhe8KPlyL1w0I-jHh0E5NPB951i-sIGjJnKf__zRDcfAvKgcjQeKe2YqUzBHljPnKO7PLmxwhouZ313KROh_cqNKAaxJasN0Z7VX6ggWv1456c7UFUC5jlZ-Uwh3T7evyRuanOmat0un0xCrr2yNvNpAhbdmDHUogiKwOuqwmo18Nl94im91IsPNzS0ALRGRME028tqCbu-aOPBhm2pGT5V40U4zPUS3ev-cKtrgg_Pj4Sqrpb-qSRKhgE7QENy90srd2cPITThEZuqzEHJbbTaVPCVzOXalpGqQkp0sXuOf9rWP-tn91axug3KqexxIWiyEev4seEXTJSte5KBDliOkNj4pFEQtyXCk-a0vTwvdskAG_cWTgAZ2QPJtSolEvhzNbk4OWXD2QqVr1Mf6q6s3kHQ07NM\",\n  \"secret\": \"test@1234\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user"
+									]
+								},
+								"description": "User clicks link, Don't have an account? Create an account, where user submits their information to create an account."
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_213] Create account - Passively registered user - Agent created user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "dab6ac8a-e1c6-4329-a044-db1ed6d8534b",
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"//Verify the response details",
+											"pm.test(\"Verify userId is not empty\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.userId).to.be.not.empty;",
+											"});",
+											"",
+											"//Set the new user ID as env varibale",
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"newUserId\", jsonData.userId);",
+											"pm.globals.set(\"newUserId\", jsonData.userId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "1af7cfe8-a4fd-45d6-bd1b-cd60c89b88b2",
+										"exec": [
+											"// Creating a unique email address",
+											"function uniqueemail() {",
+											"  var timestamp = Date.now();",
+											"  const a = \"qa+\";",
+											"  const b = \"@homex.com\"",
+											"  var uniqueemail = a+timestamp+b;",
+											"  return uniqueemail;",
+											"}",
+											"",
+											"//Set the email address as an env varibale",
+											"postman.setEnvironmentVariable(\"uniqueEmail\", uniqueemail());",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{agentToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"id\":\"\",\n   \"firstName\":\"test\",\n   \"lastName\":\"lname\",\n   \"email\":\"{{uniqueEmail}}\",\n   \"phone\":\"9990009999\",\n   \"phoneType\":\"Mobile\",\n   \"contactPreference\":\"email\",\n   \"draft\":false,\n   \"externalLinks\":[\n\n   ],\n   \"isRegistered\":false\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/business/user",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"business",
+										"user"
+									]
+								},
+								"description": "Agent can create a user when an unregistered user connects via chat"
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_213] Get user details - Passively registered User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "dab6ac8a-e1c6-4329-a044-db1ed6d8534b",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"//Set the new user ID as env varibale",
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"nonregisteredUserEmail\", jsonData.email);",
+											"pm.globals.set(\"nonregisteredUserEmail\", jsonData.email);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "1af7cfe8-a4fd-45d6-bd1b-cd60c89b88b2",
+										"exec": [
+											"// Creating a unique email address",
+											"function uniqueemail() {",
+											"  var timestamp = Date.now();",
+											"  const a = \"qa+\";",
+											"  const b = \"@homex.com\"",
+											"  var uniqueemail = a+timestamp+b;",
+											"  return uniqueemail;",
+											"}",
+											"",
+											"//Set the email address as an env varibale",
+											"postman.setEnvironmentVariable(\"uniqueEmail\", uniqueemail());",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{agentToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://{{domain}}/business/user/{{newUserId}}",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"business",
+										"user",
+										"{{newUserId}}"
+									]
+								},
+								"description": "Agent can create a user when an unregistered user connects via chat"
+							},
+							"response": []
+						},
+						{
+							"name": "[LO_213] Create account - Passively registered user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f44b9c-7910-4dd5-a3ae-e13e74579eb0",
+										"exec": [
+											"",
+											"pm.test(\"Status code is 201\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"// Verify the response return the user Id",
+											"",
+											"pm.test(\"Verify respose message\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.userId).to.be.not.empty;",
+											"    pm.expect(jsonData.userId).to.be.eq(environment.newUserId);",
+											"});",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "62daffc5-4815-49c0-9e3c-8c94b22d769e",
+										"exec": [
+											"// Creating a unique email address",
+											"function uniqueemail() {",
+											"  var timestamp = Date.now();",
+											"  const a = \"qa+\";",
+											"  const b = \"@homex.com\"",
+											"  var uniqueemail = a+timestamp+b;",
+											"  return uniqueemail;",
+											"}",
+											"",
+											"//Set the email address as an env varibale",
+											"postman.setEnvironmentVariable(\"uniqueEmail\", uniqueemail());",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{nonregisteredUserEmail}}\",\n  \"firstName\": \"homex\",\n  \"lastName\": \"\",\n  \"phone\": \"\",\n  \"phoneType\": \"\",\n  \"contactPreference\": \"email\",\n  \"captcha\": \"03AOLTBLQT1e8xnEnvHxtbWT_YeBCd4nStaXYS-MaLFS3-DfNydRIFR4L4-DauHTHLoM751FGELm9mvy4xI45IlJFnZhe8KPlyL1w0I-jHh0E5NPB951i-sIGjJnKf__zRDcfAvKgcjQeKe2YqUzBHljPnKO7PLmxwhouZ313KROh_cqNKAaxJasN0Z7VX6ggWv1456c7UFUC5jlZ-Uwh3T7evyRuanOmat0un0xCrr2yNvNpAhbdmDHUogiKwOuqwmo18Nl94im91IsPNzS0ALRGRME028tqCbu-aOPBhm2pGT5V40U4zPUS3ev-cKtrgg_Pj4Sqrpb-qSRKhgE7QENy90srd2cPITThEZuqzEHJbbTaVPCVzOXalpGqQkp0sXuOf9rWP-tn91axug3KqexxIWiyEev4seEXTJSte5KBDliOkNj4pFEQtyXCk-a0vTwvdskAG_cWTgAZ2QPJtSolEvhzNbk4OWXD2QqVr1Mf6q6s3kHQ07NM\",\n  \"secret\": \"test@1234\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user"
+									]
+								},
+								"description": "User clicks link, Don't have an account? Create an account, where user submits their information to create an account."
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "My Account",
+					"item": [
+						{
+							"name": "[AC_101][1] Consumer User - Profile",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f44b9c-7910-4dd5-a3ae-e13e74579eb0",
+										"exec": [
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Verify the response return the user information",
+											"",
+											"pm.test(\"Verify consumer email\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.email).to.be.eq(environment.consumerEmail);",
+											"    ",
+											"});",
+											"",
+											"pm.test(\"Verify firstname is not null\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.firstName).to.be.not.empty;",
+											"    ",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "62daffc5-4815-49c0-9e3c-8c94b22d769e",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{consumerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/{{consumerId}}",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"{{consumerId}}"
+									]
+								},
+								"description": "User profile is populated for a registered user"
+							},
+							"response": []
+						},
+						{
+							"name": "[AC_101][2] Consumer User - Profile - Avatar",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "56f44b9c-7910-4dd5-a3ae-e13e74579eb0",
+										"exec": [
+											"pm.test(\"Status code is 200\", function() {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "62daffc5-4815-49c0-9e3c-8c94b22d769e",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/{{consumerId}}/avatar-file",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"{{consumerId}}",
+										"avatar-file"
+									]
+								},
+								"description": "User profile is populated for a registered user - get avatar"
+							},
+							"response": []
+						},
+						{
+							"name": "[AC_104][1] My Account - Editing Profile",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "55f6a41c-826d-4808-9c7a-e7df9befe457",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{consumerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{  \n   \"id\":\"{{consumerId}}\",\n   \"email\":\"{{consumerEmail}}\",\n   \"firstName\":\"Arachnid\",\n   \"lastName\":\"Person\",\n   \"phone\":\"(555) 555-5557\",\n   \"phoneType\":null,\n   \"draft\":false,\n   \"contactPreference\":null\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/{{consumerId}}",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"{{consumerId}}"
+									]
+								},
+								"description": "User can successfully edit their account details"
+							},
+							"response": []
+						},
+						{
+							"name": "[AC_104][2] My Account - Editing Profile Avatar",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b3e027b5-733a-45d7-a040-90a7be5c54ff",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{consumerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/Users/sashikawijesinghe/Desktop/RegressionLib/fileUploadTest.jpg"
+										}
+									],
+									"options": {
+										"formdata": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/{{consumerId}}/avatar-file",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"{{consumerId}}",
+										"avatar-file"
+									]
+								},
+								"description": "User can successfully edit their account details (Avatar)"
+							},
+							"response": []
+						},
+						{
+							"name": "[AC_106] My Account - Phone Field validations",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "55f6a41c-826d-4808-9c7a-e7df9befe457",
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});",
+											"",
+											"// Verify the error message indicate the failure reason",
+											"",
+											"pm.test(\"Verify error response\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.details).to.have.string(\"Value (555) 555-555 is not a valid phone format\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{consumerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{  \n   \"id\":\"{{consumerId}}\",\n   \"email\":\"{{consumerEmail}}\",\n   \"firstName\":\"sashika\",\n   \"lastName\":\"homex\",\n   \"phone\":\"(555) 555-555\",\n   \"phoneType\":null,\n   \"draft\":false,\n   \"contactPreference\":null\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/{{consumerId}}",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"{{consumerId}}"
+									]
+								},
+								"description": "User should not be able to provide invalid information on the fields"
+							},
+							"response": []
+						},
+						{
+							"name": "[AC_107] My Account - Change password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "55f6a41c-826d-4808-9c7a-e7df9befe457",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{consumerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"oldSecret\":\"homex@123\",\n\t\"newSecret\":\"homex@123\"\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/{{consumerId}}/password",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"{{consumerId}}",
+										"password"
+									]
+								},
+								"description": "User should be able to successfully change the existing password"
+							},
+							"response": []
+						},
+						{
+							"name": "[AC_108] My Account - Change Password Error",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "55f6a41c-826d-4808-9c7a-e7df9befe457",
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});",
+											"",
+											"// Verify the error message indicate the failure reason",
+											"",
+											"pm.test(\"Verify error response\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.details).to.have.string(\"Password is invalid\");",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{consumerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"oldSecret\":\"homex@1234\",\n\t\"newSecret\":\"homex@123\"\n\t\n}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "https://{{domain}}/user/{{consumerId}}/password",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"user",
+										"{{consumerId}}",
+										"password"
+									]
+								},
+								"description": "User should be notified when an error occured while updating the password"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Properties",
+					"item": [
+						{
+							"name": "[AC_201][CH_655] My Properties - list",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f8a87061-b7fe-42ac-8873-1189a6c779b1",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"//Verify the properties defailt of default proeprty",
+											"pm.test(\"Verify consumer id\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[0].userId).to.be.eq(environment.consumerId);",
+											"    ",
+											"});",
+											"",
+											"pm.test(\"Verify address\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[0].address.addressLine1).to.have.string(\"134, Peter Str\");",
+											"});",
+											"",
+											"pm.test(\"Verify city\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[0].address.city).to.have.string(\"Toronto\");",
+											"});",
+											"",
+											"pm.test(\"Verify postalCode\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[0].address.postalCode).to.have.string(\"11111\");",
+											"});",
+											"",
+											"pm.test(\"Verify state\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData[0].address.state).to.have.string(\"FL\");",
+											"});",
+											"",
+											"",
+											"",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{consumerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://{{domain}}/consumer/properties",
+									"protocol": "https",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"consumer",
+										"properties"
+									]
+								},
+								"description": "List all existing user properties"
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Gem My Account",
+			"item": [
+				{
+					"name": "[LO_101] Agent - Login Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2839a1b6-7e9e-4dde-9465-79c8d3f0d7cb",
+								"exec": [
+									"//Verify the request success",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Verify the token is not empty",
+									"",
+									"pm.test(\"Verify token string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.token).to.be.not.empty;",
+									"});",
+									"",
+									"//Set the agent token as environement variable",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"agentToken\", jsonData.token);",
+									"pm.globals.set(\"agentToken\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"loginPassword\":\n\t{\n\t\t\"identifier\":\"{{agentEmail}}\",\n\t\t\"secret\":\"{{agentPassword}}\",\n\t\t\"rememberMe\":false\n\t}\n}\n",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{domain}}/user/access-token",
+							"protocol": "https",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"user",
+								"access-token"
+							]
+						},
+						"description": "Can successfully login with an existing account"
+					},
+					"response": []
+				},
+				{
+					"name": "[AC_403] Askgem - Emails / Create a Gem User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b0f24f7e-8049-4629-afee-19824aa78027",
+								"exec": [
+									"// Creating a unique email address",
+									"function uniqueemail() {",
+									"  var timestamp = Date.now();",
+									"  const a = \"alo+gemtest\";",
+									"  const b = \"@homex.com\"",
+									"  var uniqueemail = a+timestamp+b;",
+									"  return uniqueemail;",
+									"}",
+									"",
+									"//Set the email address as an env varibale",
+									"postman.setEnvironmentVariable(\"uniqueEmail\", uniqueemail());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agentToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"alo+gemtest2@homex.com\",\n  \"firstName\": \"Andy\",\n  \"lastName\": \"Gem\",\n  \"contactPreference\": \"Email\",\n  \"preferredCompanyId\": \"E22C997B-45D3-47E4-BEBE-7B0BECEB9A8B\",\n  \"source\": \"Import\",\n  \"attributes\": {\n  \t\"Source\": \"seg01\"\n  },\n  \"externalLinks\": [\n  \t{\n  \t\t\"externalId\": \"successware\",\n  \t\t\"externalSystem\": \"Gem\"\n  \t}],\n  \"phones\":[{\n  \t\t\"number\": \"1234567890\",\n        \"type\": \"Work\",\n        \"primary\": true\n  \t}\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{domain}}/business/user",
+							"protocol": "https",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"business",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[AC_403] Askgem - Emails / Create a Gem User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0a069d36-c756-430d-a631-f0392fc32be6",
+								"exec": [
+									"// Creating a unique email address",
+									"function uniqueemail() {",
+									"  var timestamp = Date.now();",
+									"  const a = \"qa+askgem\";",
+									"  const b = \"@homex.com\"",
+									"  var uniqueemail = a+timestamp+b;",
+									"  return uniqueemail;",
+									"}",
+									"",
+									"//Set the email address as an env varibale",
+									"postman.setEnvironmentVariable(\"uniqueEmail\", uniqueemail());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{agentToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"sashikawso2+gem5@gmail.com\",\n  \"firstName\": \"SashiGem\",\n  \"lastName\": \"Tester\",\n  \"contactPreference\": \"Email\",\n  \"preferredCompanyId\": \"E22C997B-45D3-47E4-BEBE-7B0BECEB9A8B\",\n  \"source\": \"Import\",\n  \"attributes\": {\n  \t\"Source\": \"seg01\"\n  },\n  \"externalLinks\": [\n  \t{\n  \t\t\"externalId\": \"successware\",\n  \t\t\"externalSystem\": \"Gem\"\n  \t}],\n  \"phones\":[{\n  \t\t\"number\": \"1234567890\",\n        \"type\": \"Work\",\n        \"primary\": true\n  \t}\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{domain}}/business/user",
+							"protocol": "https",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"business",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AskGem - Gem User Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2839a1b6-7e9e-4dde-9465-79c8d3f0d7cb",
+								"exec": [
+									"//Verify the request success",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"// Verify the token is not empty",
+									"",
+									"pm.test(\"Verify token string\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.token).to.be.not.empty;",
+									"});",
+									"",
+									"//Set the consumer token as environement variable",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"askgemConsumerToken\", jsonData.token);",
+									"pm.globals.set(\"askgemConsumerToken\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"loginPassword\":\n\t{\n\t\t\"identifier\":\"alo+askgem1@homex.com\",\n\t\t\"secret\":\"HomeX@123\",\n\t\t\"rememberMe\":false\n\t}\n}\n",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{domain}}/user/access-token",
+							"protocol": "https",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"user",
+								"access-token"
+							]
+						},
+						"description": "Can successfully login with an existing account"
+					},
+					"response": []
+				},
+				{
+					"name": "[AC_401][CH_654] AskGem - Membership",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f8a87061-b7fe-42ac-8873-1189a6c779b1",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"//Verify the property id is returned",
+									"pm.test(\"Verify response is not empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.not.empty;",
+									"    ",
+									"});",
+									"",
+									"// Verify the membership properties available",
+									"pm.test(\"Verify membership properties on payload\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData[0].membershipNumber).to.be.not.empty;",
+									"    pm.expect(jsonData[0].type).to.be.not.empty;",
+									"    pm.expect(jsonData[0].status).to.be.not.empty;",
+									"    pm.expect(jsonData[0].endDate).to.be.not.empty;",
+									"    pm.expect(jsonData[0].startDate).to.be.not.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{askgemConsumerToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{domain}}/consumer/membership",
+							"protocol": "https",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"consumer",
+								"membership"
+							]
+						},
+						"description": "User clicks \"Add New Property\" to add new property information."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "966c3e3f-4f93-4046-8ae0-8f86a8be877d",
+				"type": "text/javascript",
+				"exec": [
+					"pm.request.headers.add({ key: 'x-test', value: '1'});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9c36c69d-d754-4ece-b1f9-c673b21d9cef",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

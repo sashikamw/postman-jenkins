@@ -1,0 +1,16 @@
+{
+  "name": "postman-jenkins",
+  "version": "1.0.0",
+  "description": "postman test",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test_qa": "newman run 'https://www.getpostman.com/collections/8da7b8db245aa4d63707' -e '/Users/sashikawijesinghe/Documents/LearningMaterials/Postman/tests/Env.postman_environment.json'"
+  },
+  "author": "Sashika Wijesinghe",
+  "license": "ISC",
+  "dependencies": {
+    "newman": "^5.1.0"
+  }
+}
