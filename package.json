@@ -6,7 +6,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test_qa": "newman run 'https://www.getpostman.com/collections/8da7b8db245aa4d63707' -e '/Users/sashikawijesinghe/Documents/LearningMaterials/Postman/tests/Env.postman_environment.json'"
+    "test_qa": "newman run 'https://www.getpostman.com/collections/8da7b8db245aa4d63707' -e '/Users/sashikawijesinghe/Documents/LearningMaterials/Postman/tests/Env.postman_environment.json' --reporters=cli,htmlextra"
   },
   "author": "Sashika Wijesinghe",
   "license": "ISC",
